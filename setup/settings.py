@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,12 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'escola'
+    'escola',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -128,6 +131,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -140,9 +145,9 @@ REST_FRAMEWORK = {
     #    'rest_framework.permissions.IsAuthenticated',
     #    'rest_framework.permissions.DjangoModelPermissions'
     #],
-    'DEFAULT_AUTHENTIC_CLASSES':[
-        'rest_framework.authentication.BasicAuthentication'
-    ],
+    #'DEFAULT_AUTHENTIC_CLASSES':[
+    #    'rest_framework.authentication.BasicAuthentication'
+    #],
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
     ],
@@ -150,3 +155,21 @@ REST_FRAMEWORK = {
         'anon': '3/day',
     }
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    
+]
+
+# CACHES = {
+#     'default':{
+#         'BACKEND': 'django_redis.cache.RedisCache',
+#         'LOCATION': 'redis://10.83.0.88:6379/1',
+#         'OPTIONS':{
+#             'CLIENT_CLASS':'django_redis.client.DefaultClient'
+#         }
+#     }
+# }
+
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+# SESSION_CACHE_ALIAS ='default'
